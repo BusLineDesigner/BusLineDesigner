@@ -3,7 +3,7 @@ bld.component('tab-about', {
     /* HTML */
     `<div class="container">
         <h1 class="fw-normal display-5">关于 Bus Line Designer</h1>
-        <p class="lead"><b>Bus Line Designer 在 <a class="text-reset" href="https://github.com/buslinedesigner/buslinedesigner.github.io" target="_blank">GitHub</a> 上开源，使用 APGL-3.0 协议。使用源代码时请务必注意遵守协议规定。</b>
+        <p class="lead"><b>Bus Line Designer 在 <a class="text-reset" href="https://github.com/buslinedesigner/buslinedesigner.github.io" target="_blank">GitHub</a> 上开源，使用 AGPL-3.0 协议。使用源代码时请务必注意遵守协议规定。</b>
         <br /><b>如果在使用过程中有任何问题，请到<a class="text-reset" href="https://qun.qq.com/qqweb/qunpro/share?inviteCode=lM5QZ" target="_blank">公测频道</a>中反馈，或直接在<a class="text-reset" href="https://message.bilibili.com/#whisper/mid273163717" target="_blank">B站</a>向我反馈。</b></p>
         <br />
         <h1 class="fw-normal display-5">关于 BobLiu</h1>
