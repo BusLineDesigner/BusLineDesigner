@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name="description" content="Bus Line Designer，设计公交线路的小工具" />
-	<meta name="keywords" content="公交,公交线路,自制,设计" />
+	    <meta name="description" content="Bus Line Designer，设计公交线路的小工具" />
+	    <meta name="keywords" content="公交,公交线路,自制,设计" />
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <meta name="baidu-site-verification" content="codeva-nPW0jG0imx" />
         <title>Bus Line Designer</title>
@@ -25,6 +25,7 @@
         <script src="tools/xlsx.full.min.js"></script>
         <script src="amapConfig.js"></script>
         <script src="https://webapi.amap.com/loader.js"></script>
+        <script src="tools/pako.min.js"></script>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -175,6 +176,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="modalNewDomain" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title">全新域名上线</h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body form-control">
+                                <span>Bus Line Designer 全新域名 busline.design 已上线！你的设置已经自动导入～</span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">好的</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <tab-station ref="tabStation" :hidden="currentTab != 'stations'" v-model:line="lineFile" v-model:settings="settings" @modified="saveOriginal" @undo="undo" @confirm="showModalConfirmForComponents" @loadline="loadLine" @toast="showMessage" @toggletab="toggleTab"></tab-station>
                 <tab-fare ref="tabFare" v-if="currentTab == 'fare'" v-model:line="lineFile" v-model:settings="settings" @toast="showMessage"></tab-fare>
                 <tab-schematic :hidden="currentTab != 'schematic'"></tab-schematic>
@@ -195,7 +212,8 @@
                 <div class="container">
                     <span class="text-muted font-monospace">Version 2.1.4 Beta. Code by <a class="text-reset" href="https://github.com/BobLiu0518" target="_blank">BobLiu</a>.</span>
                     &emsp;&emsp;
-                    <span class="text-muted" v-if="showUpYun||true"><small>本网站由 </small><a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="_blank"><img src="assets/upyun.png" height="28" /></a><small> 提供CDN加速服务</small></span>
+                    <span class="text-muted"><small>本网站由 </small><a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="_blank"><img src="assets/upyun.png" height="28" /></a><small> 提供CDN加速服务</small></span>
+                    <span class="text-muted"><a class="text-reset" href="https://beian.miit.gov.cn/">沪ICP备20015150号-2</a></span>
                     <span class="text-muted" style="float: right;">友情链接:&emsp;<a class="text-reset" href="https://ccbus.huijiwiki.com/" target="_blank">长春交通百科</a>&emsp;<a class="text-reset" href="https://railmapgen.github.io/?utm_source=BusLineDesigner" target="_blank">地铁线路图工具包</a></span>
                 </div>
             </footer>

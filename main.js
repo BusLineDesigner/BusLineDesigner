@@ -1,3 +1,7 @@
+if(window.location.hostname != 'busline.design') {
+    window.location = 'https://busline.design/?settings=' + btoa(String.fromCharCode(...pako.deflate(localStorage.getItem('settings') ?? '{}')));
+}
+
 const bld = Vue.createApp({
     setup() {
         const blankLineFile = {
@@ -299,7 +303,6 @@ const bld = Vue.createApp({
             regions: {},
             chelaileTempData: {},
             crTempData: {},
-            showUpYun: false,
         }
     },
     mounted() {
@@ -323,7 +326,19 @@ const bld = Vue.createApp({
         this.fileReader.addEventListener('load', this.loadLineFromFile);
 
         var savedSettings;
-        if(savedSettings = localStorage.getItem('settings')){
+        const params = new URLSearchParams(window.location.search);
+        if(savedSettings = params.get('settings')){
+            savedSettings = JSON.parse(new TextDecoder().decode(pako.inflate(Uint8Array.from(atob(savedSettings.replaceAll(' ', '+')), c => c.charCodeAt(0)))));
+            for(const type in savedSettings){
+                for(const item in savedSettings[type]){
+                    this.settings[type][item].current = savedSettings[type][item].current;
+                }
+            }
+            new bootstrap.Modal(document.getElementById('modalNewDomain')).show();
+            try{
+                history.replaceState(null, '', '/');
+            }catch(e){}
+        }else if(savedSettings = localStorage.getItem('settings')){
             savedSettings = JSON.parse(savedSettings);
             for(const type in savedSettings){
                 for(const item in savedSettings[type]){
@@ -350,10 +365,6 @@ const bld = Vue.createApp({
             this.showMessage(["正在使用自定义 Key", "", "如果加载地图出现问题，请检查设置中的自定义 Key 选项", false]);
         } else {
             this.showMessage(["未设置自定义 Key", "", "大部分功能将不可用。详见 https://mp.weixin.qq.com/s/wAgdE5AkqfMvSTfV3tKjTg", false]);
-        }
-
-        if(window.location.host == 'cdn.buslinedesigner.bobliu.tech'){
-            this.showUpYun = true;
         }
 
         this.$refs.tabStation.mapInit();
