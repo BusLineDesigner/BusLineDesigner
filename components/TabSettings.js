@@ -20,7 +20,7 @@ bld.component('tab-settings', {
                             <select v-if="item.type == 'select'" class="form-select" v-model="item.current">
                                 <option v-for="(option, index) in item.options" :value="option.value" v-text="option.name"></option>
                             </select>
-                            <input v-if="item.type == 'input'" type="text" class="form-control" autocomplete="off" :placeholder="item.placeholder" v-model.trim="item.current" />
+                            <input v-if="item.type == 'input'" type="text" class="form-control" autocomplete="off" :placeholder="item.placeholder" v-model.trim="item.current" @change="typeof item?.onChange === 'function' && item.onChange(item.current);"/>
                             <p v-if="item.description" v-text="item.description" class="fst-italic fs-6"></p>
                         </div>
                     </div>

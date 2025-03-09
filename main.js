@@ -86,6 +86,13 @@ const bld = Vue.createApp({
                         type: 'input',
                         placeholder: '留空则使用默认 Key',
                         description: '使用空格分隔，刷新页面后生效',
+                        onChange: (value) => {
+                            if(!value.match(/^[0-9a-f]{32} [0-9a-f]{32}$/)){
+                                this.showMessage(["设置自定义 Key", "", "Key 格式错误，请检查后再试…", false]);
+                            }else{
+                                this.showMessage(["设置自定义 Key", "", "自定义 Key 已设置，刷新页面后生效哦～", false]);
+                            }
+                        },
                     },
                 },
                 map: {
