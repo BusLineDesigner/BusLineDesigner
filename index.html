@@ -23,7 +23,6 @@
         <script src="tools/jscolor.min.js"></script>
         <script src="tools/html2canvas.min.js"></script>
         <script src="tools/xlsx.full.min.js"></script>
-        <script src="amapConfig.js"></script>
         <script src="https://webapi.amap.com/loader.js"></script>
         <script src="tools/pako.min.js"></script>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -188,6 +187,58 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">好的</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modalImportantNotice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title">用户协议</h6>
+                            </div>
+                            <div class="modal-body">
+                                <h4>关于 Bus Line Designer</h4>
+                                <p>本网站（Bus Line Designer，简称 BLD）是一个免费的在线工具，旨在帮助用户便捷地创建、展示和处理公共交通线路信息。</p>
+
+                                <h4>关于地图服务</h4>
+                                <p>BLD 本身不提供地图服务。目前，本站的地图相关功能（如地图展示、路径计算、站点搜索等）<strong>完全依赖</strong>第三方平台<strong>高德地图</strong>的 API 接口实现。</p>
+                                <p>因此，您需要自行获取高德地图的 API Key 并配置后方可使用地图功能。如果您不进行配置，<strong>所有依赖于地图的功能将无法使用</strong>，例如，地图面板将显示为空白。</p>
+                                </ul>
+
+                                <h4>使用高德地图 API 的步骤与法律责任</h4>
+                                <h5>1. 注册与遵守协议</h5>
+                                <p>
+                                    如果您决定使用地图功能，请首先：<br />
+                                    • 在<a class="text-reset" href="https://lbs.amap.com/dev/id/newuser" target="_blank">高德地图开放平台</a>注册开发者账号。<br />
+                                    • <strong class="text-danger">务必仔细阅读并严格遵守</strong> <a class="text-reset" href="https://lbs.amap.com/pages/terms/" target="_blank">《高德地图开放平台服务协议》</a> 及其相关规范。
+                                </p>
+                                <p class="alert alert-danger"><strong>特别风险提示：</strong>高德地图对<b>“个人”</b>与<b>“企业”</b>认证开发者有不同的使用权限限制。<strong>您必须根据自身属性（商用与否）选择并遵守对应的服务条款。任何因您违反高德地图协议而导致的法律责任（如索赔、封禁等），均须由您<u>自行承担</u></strong>。BLD（本站）作为技术接口提供方，无法也无需对此负责。</p>
+
+                                <h5>2. 获取并配置 Key</h5>
+                                <p>在确保理解并同意上述协议后，请按以下步骤操作：</p>
+                                <ol>
+                                    <li>登录高德开放平台，进入「应用管理」→「我的应用」，点击「创建新应用」。</li>
+                                    <li>创建后，点击该应用右侧的「添加」，为应用添加Key，「服务平台」选择“Web端（JSAPI）”。</li>
+                                    <li>添加成功后，您将获得一个「Key」和一个「安全密钥」（均为32位字符串）。</li>
+                                    <li>打开 BLD 的「设置」→「通用设置」面板，找到「API Key + 安全密钥」项。</li>
+                                    <li>将高德提供的 <b>Key</b> 和<b>安全密钥</b>依次填入输入框，中间用<strong>一个空格</strong>隔开。</li>
+                                    <li>保存设置并<strong>刷新页面</strong>，地图功能即可生效。</li>
+                                </ol>
+
+                                <h5>3. 最终确认</h5>
+                                <p>
+                                    当您在 BLD 中配置您的高德 API Key，即代表：<br />
+                                    1. 您已阅读并同意高德地图的相关协议。<br />
+                                    2. 您确认您的使用行为是合规的。<br />
+                                    3. 您理解并同意，BLD 仅提供了一个技术界面，您通过本站对高德 API 的任何调用行为，均视为您本人的行为。
+                                </p>
+
+                                <h4>关于未来</h4>
+                                <p>BLD 未来会考虑接入更多地图平台以供选择。</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">我已明白并知晓、同意上述内容</button>
                             </div>
                         </div>
                     </div>

@@ -80,17 +80,17 @@ const bld = Vue.createApp({
                         ]
                     },
                     customizeKey: {
-                        name: '自定义 Key+安全密钥',
+                        name: 'API Key + 安全密钥',
                         current: '',
                         default: '',
                         type: 'input',
-                        placeholder: '留空则使用默认 Key',
+                        placeholder: '',
                         description: '使用空格分隔，刷新页面后生效',
                         onChange: (value) => {
                             if(!value.match(/^[0-9a-f]{32} [0-9a-f]{32}$/)){
-                                this.showMessage(["设置自定义 Key", "", "Key 格式错误，请检查后再试…", false]);
+                                this.showMessage(["设置 API Key", "", "API Key 格式错误，请检查后再试…", false]);
                             }else{
-                                this.showMessage(["设置自定义 Key", "", "自定义 Key 已设置，刷新页面后生效哦～", false]);
+                                this.showMessage(["设置 API Key", "", "API Key 已设置，刷新页面后生效哦～", false]);
                             }
                         },
                     },
@@ -270,8 +270,8 @@ const bld = Vue.createApp({
                 },
             },
             announcement: {
-                lastUpdated: Date.parse('2022/12/16 21:30:00'),
-                content: 'Bus Line Designer 自动算路 / 站点自动命名 失效了？解决办法详见：https://mp.weixin.qq.com/s/wAgdE5AkqfMvSTfV3tKjTg'
+                lastUpdated: 0,
+                content: '暂无公告',
             },
             lineFile: deepClone(this.blankLineFile),
             originalLineFile: deepClone(this.blankLineFile),
@@ -369,13 +369,15 @@ const bld = Vue.createApp({
                 securityJsCode: config[1],
             };
 
-            this.showMessage(["正在使用自定义 Key", "", "如果加载地图出现问题，请检查设置中的自定义 Key 选项", false]);
+            this.showMessage(["地图加载", "", "如果加载地图出现问题，请检查设置中的 API Key 选项", false]);
         } else {
-            this.showMessage(["未设置自定义 Key", "", "大部分功能将不可用。详见 https://mp.weixin.qq.com/s/wAgdE5AkqfMvSTfV3tKjTg", false]);
+            this.showMessage(["未设置 API Key", "", "地图登大部分功能将不可用。", false]);
         }
 
         this.$refs.tabStation.mapInit();
         getContents("https://api.chelaile.net.cn/goocity/city!morecities.action?sign=&s=android&v=&vc=245", this.loadRegions);
+
+        new bootstrap.Modal(document.getElementById("modalImportantNotice")).show();
     },
     methods: {
         setTab(tabId) {

@@ -618,7 +618,7 @@ bld.component('tab-station', {
                     if(this.routeSearchResultGot !== null){
                         setTimeout(() => {
                             if(!this.routeSearchResultGot){
-                                this.$emit('toast', ['自动算路超时', '', '如果自动算路失败，请阅读 https://mp.weixin.qq.com/s/wAgdE5AkqfMvSTfV3tKjTg 中的解决办法', false]);
+                                this.$emit('toast', ['自动算路超时', '', '如果自动算路失败，请检查 API Key', false]);
                             }
                             this.routeSearchResultGot = null;
                         }, 2000);
