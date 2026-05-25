@@ -1,3 +1,4 @@
+//自动跳转到busline.design域名
 if(window.location.hostname != 'busline.design') {
     window.location = 'https://busline.design/?settings=' + btoa(String.fromCharCode(...pako.deflate(localStorage.getItem('settings') ?? '{}')));
 }
@@ -79,18 +80,33 @@ const bld = Vue.createApp({
                             {name: '启用', value: '1'},
                         ]
                     },
-                    customizeKey: {
-                        name: 'API Key + 安全密钥',
+                    apiKey: {
+                        name: 'API Key',
                         current: '',
                         default: '',
                         type: 'input',
-                        placeholder: '',
-                        description: '使用空格分隔，刷新页面后生效',
+                        placeholder: '高德地图 Web端 JSAPI Key',
+                        description: '刷新页面后生效',
                         onChange: (value) => {
-                            if(!value.match(/^[0-9a-f]{32} [0-9a-f]{32}$/)){
-                                this.showMessage(["设置 API Key", "", "API Key 格式错误，请检查后再试…", false]);
-                            }else{
-                                this.showMessage(["设置 API Key", "", "API Key 已设置，刷新页面后生效哦～", false]);
+                            if(!value.match(/^[0-9a-f]{32}$/)){
+                                this.showMessage(["设置 API Key", "", "API Key 应为 32 位十六进制字符", false]);
+                            }else if(this.settings.general.securityKey.current.match(/^[0-9a-f]{32}$/)){
+                                this.showMessage(["设置 API Key", "", "API Key 和安全密钥已设置，刷新页面后生效哦～", false]);
+                            }
+                        },
+                    },
+                    securityKey: {
+                        name: '安全密钥',
+                        current: '',
+                        default: '',
+                        type: 'password',
+                        placeholder: '高德地图安全密钥（JSAPI）',
+                        description: '刷新页面后生效',
+                        onChange: (value) => {
+                            if(!value.match(/^[0-9a-f]{32}$/)){
+                                this.showMessage(["设置安全密钥", "", "安全密钥应为 32 位十六进制字符", false]);
+                            }else if(this.settings.general.apiKey.current.match(/^[0-9a-f]{32}$/)){
+                                this.showMessage(["设置安全密钥", "", "API Key 和安全密钥已设置，刷新页面后生效哦～", false]);
                             }
                         },
                     },
@@ -336,6 +352,13 @@ const bld = Vue.createApp({
         const params = new URLSearchParams(window.location.search);
         if(savedSettings = params.get('settings')){
             savedSettings = JSON.parse(new TextDecoder().decode(pako.inflate(Uint8Array.from(atob(savedSettings.replaceAll(' ', '+')), c => c.charCodeAt(0)))));
+            // 迁移旧版 settings：将 customizeKey（Key+安全密钥空格分隔）拆分为 apiKey 和 securityKey
+            if(savedSettings.general && savedSettings.general.customizeKey){
+                const parts = savedSettings.general.customizeKey.current.split(' ');
+                savedSettings.general.apiKey = {current: parts[0] || ''};
+                savedSettings.general.securityKey = {current: parts[1] || ''};
+                delete savedSettings.general.customizeKey;
+            }
             for(const type in savedSettings){
                 for(const item in savedSettings[type]){
                     this.settings[type][item].current = savedSettings[type][item].current;
@@ -347,6 +370,13 @@ const bld = Vue.createApp({
             }catch(e){}
         }else if(savedSettings = localStorage.getItem('settings')){
             savedSettings = JSON.parse(savedSettings);
+            // 迁移旧版 settings：将 customizeKey（Key+安全密钥空格分隔）拆分为 apiKey 和 securityKey
+            if(savedSettings.general && savedSettings.general.customizeKey){
+                const parts = savedSettings.general.customizeKey.current.split(' ');
+                savedSettings.general.apiKey = {current: parts[0] || ''};
+                savedSettings.general.securityKey = {current: parts[1] || ''};
+                delete savedSettings.general.customizeKey;
+            }
             for(const type in savedSettings){
                 for(const item in savedSettings[type]){
                     this.settings[type][item].current = savedSettings[type][item].current;
@@ -362,13 +392,13 @@ const bld = Vue.createApp({
             localStorage.setItem('announcementLastRead', Date.now());
         }
 
-        if (this.settings.general.customizeKey.current) {
-            let config = this.settings.general.customizeKey.current.split(' ');
-            window.AMapKey = config[0];
-            window._AMapSecurityConfig = {
-                securityJsCode: config[1],
-            };
-
+        if (this.settings.general.apiKey.current) {
+            window.AMapKey = this.settings.general.apiKey.current;
+            if (this.settings.general.securityKey.current) {
+                window._AMapSecurityConfig = {
+                    securityJsCode: this.settings.general.securityKey.current,
+                };
+            }
             this.showMessage(["地图加载", "", "如果加载地图出现问题，请检查设置中的 API Key 选项", false]);
         } else {
             this.showMessage(["未设置 API Key", "", "地图等大部分功能将不可用。", false]);

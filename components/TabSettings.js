@@ -21,11 +21,12 @@ bld.component('tab-settings', {
                                 <option v-for="(option, index) in item.options" :value="option.value" v-text="option.name"></option>
                             </select>
                             <input v-if="item.type == 'input'" type="text" class="form-control" autocomplete="off" :placeholder="item.placeholder" v-model.trim="item.current" @change="typeof item?.onChange === 'function' && item.onChange(item.current);"/>
+                            <input v-if="item.type == 'password'" type="password" class="form-control" autocomplete="off" :placeholder="item.placeholder" v-model.trim="item.current" @change="typeof item?.onChange === 'function' && item.onChange(item.current);"/>
                             <p v-if="item.description" v-text="item.description" class="fst-italic fs-6"></p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-header">线网设置</div>
                     <div class="card-body form-control" style="border: 0px;">
@@ -35,6 +36,7 @@ bld.component('tab-settings', {
                                 <option v-for="(option, index) in item.options" :value="option.value" v-text="option.name"></option>
                             </select>
                             <input v-if="item.type == 'input'" type="text" class="form-control" autocomplete="off" :placeholder="item.placeholder" v-model.trim="item.current" />
+                            <input v-if="item.type == 'password'" type="password" class="form-control" autocomplete="off" :placeholder="item.placeholder" v-model.trim="item.current" />
                             <p v-if="item.description" v-text="item.description" class="fst-italic fs-6"></p>
                         </div>
                     </div>
