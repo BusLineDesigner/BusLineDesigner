@@ -23,6 +23,30 @@
         <script src="tools/jscolor.min.js"></script>
         <script src="tools/html2canvas.min.js"></script>
         <script src="tools/xlsx.full.min.js"></script>
+        <script>
+            // 高德真的是没有🐴了，Linux用户和狗不得入内，只配看老到极致的地图。Linux怎么你了😅
+            // 这几行修复了这个问题。
+            function isDesktopLinux() {
+                if (navigator.userAgentData) {
+                    return navigator.userAgentData.platform === 'Linux' && navigator.userAgentData.mobile === false;
+                }
+
+                var userAgent = navigator.userAgent || '';
+                return userAgent.includes('Linux') && !userAgent.includes('Android') && !userAgent.includes('Mobile');
+            }
+
+            if (isDesktopLinux()) {
+                window.forceWebGL = true;
+                window.forceWebGLBaseRender = true;
+                window.AMapDisableBrowserVersionCheck = true;
+                window.AMapDisableWebGLPerformanceCheck = true;
+                window.AMapWebGLContextAttributes = {
+                    preserveDrawingBuffer: true,
+                    antialias: false,
+                    alpha: true
+                };
+            }
+        </script>
         <script src="https://webapi.amap.com/loader.js"></script>
         <script src="tools/pako.min.js"></script>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
