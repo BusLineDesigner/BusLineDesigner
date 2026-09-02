@@ -1,8 +1,3 @@
-//自动跳转到busline.design域名
-if(window.location.hostname != 'busline.design') {
-    window.location = 'https://busline.design/?settings=' + btoa(String.fromCharCode(...pako.deflate(localStorage.getItem('settings') ?? '{}')));
-}
-
 const bld = Vue.createApp({
     setup() {
         const blankLineFile = {
